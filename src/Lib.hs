@@ -108,8 +108,11 @@ getMineList :: Board -> [Position]
 getMineList board =
     let allPositions = getAllPos board
     in foldr (\x acc ->
-        let Just (s, c) = getBoard board !?! x
-        in if s==Mine then x:acc else acc) [] allPositions
+        let sc = getBoard board !?! x
+        in 
+            case sc of 
+                Just (s,c) -> if s==Mine then x:acc else acc
+                Nothing -> acc) [] allPositions
 
 checkWinningS :: StateT Board (ExceptT String IO) ()
 checkWinningS = do
