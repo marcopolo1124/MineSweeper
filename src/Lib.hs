@@ -1,13 +1,31 @@
 module Lib where
 
-import System.Random
+import System.Random ( mkStdGen, Random(random), StdGen )
 import Control.Monad.State
+    ( MonadState(put, get),
+      MonadIO(liftIO),
+      StateT(runStateT),
+      MonadTrans(lift) )
 import Control.Monad.Except
-import Control.Applicative
+    ( MonadIO(liftIO),
+      ExceptT,
+      MonadTrans(lift),
+      MonadError(throwError) )
+import Control.Applicative ()
 import ListZipper
-import System.Random.Shuffle
+    ( NestedZipper,
+      fromList,
+      toList,
+      getFocus,
+      lengthZ,
+      nestedReplace,
+      nestedReplaceAt,
+      nestedToIndex,
+      nestedFocus,
+      (!?!) )
+import System.Random.Shuffle ( shuffle )
 import qualified Data.Set as S
-import Data.Bool
+import Data.Bool ()
 
 data Space = Mine | Empty deriving (Show, Eq)
 data Clicked = T Int | F | Flag deriving (Eq)

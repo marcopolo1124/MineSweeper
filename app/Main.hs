@@ -3,7 +3,8 @@ module Main where
 import System.Random
 
 import Control.Monad.State
-import Control.Monad.Except
+    ( MonadState(get), MonadIO(liftIO), StateT(runStateT) )
+import Control.Monad.Except ( ExceptT, runExceptT )
 
 import Lib (  emptyBoard
             , clickS
@@ -12,7 +13,7 @@ import Lib (  emptyBoard
             , flagS
             , checkWinningS
             , Board)
-import Data.Char
+import Data.Char ( toLower )
 
 
 main :: IO (Either String ((), Board))
